@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gasikara Soma - Plateforme Gaming Rwanda</title>
+    <style>
+        /* Styles temporaires - On les séparera après */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #0a0a23, #1d1e40);
+            color: white;
+            min-height: 100vh;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        
+        header {
+            text-align: center;
+            padding: 4rem 0;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 20px;
+            margin-bottom: 3rem;
+        }
+        
+        h1 {
+            font-size: 3.5rem;
+            margin-bottom: 1rem;
+            background: linear-gradient(90deg, #ff6b6b, #00f0ff);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+        }
+        
+        .subtitle {
+            font-size: 1.3rem;
+            color: #b0b0b0;
+            margin-bottom: 2rem;
+        }
+        
+        .loading {
+            text-align: center;
+            padding: 2rem;
+            color: #00f0ff;
+        }
+        
+        .games-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+        
+        .game-card {
+            background: rgba(255, 255, 255, 0.08);
+            border-radius: 15px;
+            padding: 1.5rem;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+        
+        .game-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px rgba(0, 240, 255, 0.3);
+        }
+        
+        .game-image {
+            width: 100%;
+            height: 200px;
+            background: #2d2d5a;
+            border-radius: 10px;
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #666;
+        }
+        
+        .game-title {
+            font-size: 1.3rem;
+            margin-bottom: 0.5rem;
+            color: white;
+        }
+        
+        .game-platform {
+            color: #00f0ff;
+            font-size: 0.9rem;
+            margin-bottom: 1rem;
+        }
+        
+        .download-btn {
+            background: linear-gradient(90deg, #ff6b6b, #ff5252);
+            color: white;
+            border: none;
+            padding: 0.8rem 1.5rem;
+            border-radius: 25px;
+            cursor: pointer;
+            font-weight: bold;
+            width: 100%;
+            transition: transform 0.2s;
+        }
+        
+        .download-btn:hover {
+            transform: scale(1.05);
+        }
+        
+        .admin-panel {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background: rgba(0, 0, 0, 0.8);
+            padding: 1rem;
+            border-radius: 10px;
+            border: 1px solid #00f0ff;
+        }
+        
+        .admin-btn {
+            background: #00f0ff;
+            color: #0a0a23;
+            border: none;
+            padding: 0.5rem 1rem;
+            border-radius: 5px;
+            cursor: pointer;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>🎮 Gasikara Soma</h1>
+            <p class="subtitle">Plateforme Gaming Rwanda - Jeux Vidéo Gratuits</p>
+            <div class="admin-panel">
+                <button class="admin-btn" onclick="openAdmin()">Espace Admin</button>
+            </div>
+        </header>
+        
+        <main>
+            <div class="loading" id="loading">
+                Chargement des jeux...
+            </div>
+            
+            <div class="games-grid" id="gamesGrid" style="display: none;">
+                <!-- Les jeux seront chargés ici par JavaScript -->
+            </div>
+        </main>
+    </div>
+
+    <script>
+        // Chargement des jeux depuis l'API
+        async function loadGames() {
+            try {
+                const response = await fetch('/api/games');
+                const data = await response.json();
+                
+                if (data.success) {
+                    displayGames(data.games);
+                } else {
+                    document.getElementById('loading').innerHTML = 
+                        'Erreur lors du chargement des jeux';
+                }
+            } catch (error) {
+                console.error('Erreur:', error);
+                document.getElementById('loading').innerHTML = 
+                    'Erreur de connexion au serveur';
+            }
+        }
+        
+        function displayGames(games) {
+            const gamesGrid = document.getElementById('gamesGrid');
+            const loading = document.getElementById('loading');
+            
+            if (games.length === 0) {
+                loading.innerHTML = 'Aucun jeu disponible pour le moment';
+                return;
+            }
+            
+            gamesGrid.innerHTML = games.map(game => `
+                <div class="game-card">
+                    <div class="game-image">
+                        ${game.image_url ? 
+                            `<img src="${game.image_url}" alt="${game.title}" style="width: 100%; height: 100%; object-fit: cover; border-radius: 10px;">` : 
+                            'Image non disponible'
+                        }
+                    </div>
+                    <h3 class="game-title">${game.title}</h3>
+                    <div class="game-platform">${game.platform} • ${game.is_free ? 'Gratuit' : 'Payant'}</div>
+                    <p style="color: #b0b0b0; margin-bottom: 1rem; font-size: 0.9rem;">
+                        ${game.short_description || 'Description non disponible'}
+                    </p>
+                    <button class="download-btn" onclick="downloadGame(${game.id})">
+                        Télécharger (${game.download_count || 0})
+                    </button>
+                </div>
+            `).join('');
+            
+            loading.style.display = 'none';
+            gamesGrid.style.display = 'grid';
+        }
+        
+        async function downloadGame(gameId) {
+            try {
+                // Enregistrer le téléchargement
+                await fetch(`/api/games/${gameId}/download`, { method: 'POST' });
+                
+                // Rediriger vers le lien de téléchargement
+                const gameResponse = await fetch(`/api/games/${gameId}`);
+                const gameData = await gameResponse.json();
+                
+                if (gameData.success) {
+                    window.open(gameData.game.download_link, '_blank');
+                }
+            } catch (error) {
+                console.error('Erreur téléchargement:', error);
+                alert('Erreur lors du téléchargement');
+            }
+        }
+        
+        function openAdmin() {
+            const password = prompt('Mot de passe admin:');
+            if (password) {
+                fetch('/admin/login', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ password: password })
+                })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.success) {
+                        alert('Connexion admin réussie!');
+                        // Rediriger vers l'interface admin
+                        window.location.href = '/admin/dashboard';
+                    } else {
+                        alert('Mot de passe incorrect');
+                    }
+                });
+            }
+        }
+        
+        // Charger les jeux au démarrage
+        loadGames();
+    </script>
+</body>
+</html>
