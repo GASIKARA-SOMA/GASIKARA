@@ -137,3 +137,41 @@ dist
 # Vite logs files
 vite.config.js.timestamp-*
 vite.config.ts.timestamp-*
+# =============================================
+# GASIKARA SOMA - AJOUTS SPÉCIFIQUES
+# =============================================
+
+# 🗄️ ENVIRONMENT VARIABLES
+.env
+.env.local
+.env.production
+.env.development
+*.env
+
+# 🗃️ DATABASE
+backups/
+migrations/
+
+# 🖼️ UPLOADS & MEDIA  
+public/assets/uploads/*
+!public/assets/uploads/.gitkeep
+tmp/
+temp/
+
+# 📊 COVERAGE
+.coverage/
+.nyc_output/
+
+# 🧪 TESTS
+test-results/
+jest-coverage/
+
+# 🔒 SECURITY
+*.pem
+*.key
+*.crt
+*.csr
+
+# 📁 CUSTOM
+.elasticbeanstalk/
+.terraform/
