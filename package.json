@@ -1,0 +1,86 @@
+{
+  "name": "gasikara-soma-gaming-platform",
+  "version": "1.0.0",
+  "description": "Plateforme gaming ultramoderne Gasikara Soma - Streaming, communautés, jeux vidéo RWANDA",
+  "main": "backend/server.js",
+  "type": "module",
+  "scripts": {
+    "start": "node backend/server.js",
+    "dev": "nodemon backend/server.js",
+    "build": "npm install",
+    "setup-db": "node backend/scripts/setupDatabase.js",
+    "seed-demo": "node backend/scripts/seedDemoData.js",
+    "migrate": "node backend/scripts/migrations.js",
+    "backup": "node backend/scripts/backupDatabase.js",
+    "test": "node backend/tests/runTests.js",
+    "lint": "eslint backend/ public/",
+    "clean": "rm -rf node_modules && npm install"
+  },
+  "dependencies": {
+    "express": "^4.18.2",
+    "cors": "^2.8.5",
+    "bcryptjs": "^2.4.3",
+    "jsonwebtoken": "^9.0.2",
+    "helmet": "^7.1.0",
+    "express-rate-limit": "^7.1.5",
+    "csrf": "^3.1.0",
+    "express-validator": "^7.0.1",
+    "pg": "^8.11.3",
+    "sequelize": "^6.35.1",
+    "redis": "^4.6.8",
+    "multer": "^1.4.5",
+    "sharp": "^0.32.6",
+    "cloudinary": "^1.41.0",
+    "compression": "^1.7.4",
+    "express-session": "^1.17.3",
+    "cookie-parser": "^1.4.6",
+    "fuse.js": "^6.6.2",
+    "node-cron": "^3.0.3",
+    "ua-parser-js": "^1.0.37",
+    "geoip-lite": "^1.4.7",
+    "nodemailer": "^6.9.7",
+    "web-push": "^3.6.7",
+    "socket.io": "^4.7.4",
+    "axios": "^1.5.0",
+    "cheerio": "^1.0.0-rc.12",
+    "dotenv": "^16.3.1",
+    "moment": "^2.29.4",
+    "lodash": "^4.17.21",
+    "uuid": "^9.0.1"
+  },
+  "devDependencies": {
+    "nodemon": "^3.0.1",
+    "eslint": "^8.52.0",
+    "jest": "^29.7.0"
+  },
+  "engines": {
+    "node": ">=18.0.0",
+    "npm": ">=9.0.0"
+  },
+  "keywords": [
+    "gaming-platform",
+    "rwanda-gaming", 
+    "video-games",
+    "game-distribution",
+    "africa-gaming",
+    "gasikara-soma",
+    "streaming-platform",
+    "gaming-community",
+    "jeux-video-afrique",
+    "rwanda-tech"
+  ],
+  "author": {
+    "name": "Gasikara Soma Team",
+    "email": "dev@gasikarasoma.com",
+    "url": "https://gasikarasoma.com"
+  },
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/ton-username/gasikara-soma-gaming-platform"
+  },
+  "bugs": {
+    "url": "https://github.com/ton-username/gasikara-soma-gaming-platform/issues"
+  },
+  "homepage": "https://gasikarasoma.com"
+}
