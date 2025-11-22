@@ -72,6 +72,11 @@ app.use('/assets', express.static(path.join(__dirname, '../public/assets')));
 // ROUTES DE BASE
 // =============================================
 
+// Import des routes
+import gameRoutes from './routes/gameRoutes.js';
+// Routes API
+app.use('/api/games', gameRoutes);
+
 // Route santé pour Render
 app.get('/health', (req, res) => {
     res.status(200).json({ 
@@ -106,13 +111,6 @@ app.get('/api', (req, res) => {
 // =============================================
 
 // Route jeux temporaire
-app.get('/api/games', (req, res) => {
-    res.json({
-        success: true,
-        message: 'API Jeux - En développement',
-        games: []
-    });
-});
 
 // Route admin temporaire
 app.post('/admin/login', (req, res) => {
